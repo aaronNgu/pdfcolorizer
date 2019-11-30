@@ -2,6 +2,7 @@ from pdf2image import convert_from_path, convert_from_bytes
 from PIL import Image
 import tempfile
 import os
+import sys
 
 def convert_pdf_to_png(path, pdf, output_folder):
     #change path to where the images should be stored 
@@ -19,7 +20,4 @@ def convert_pdf_to_png(path, pdf, output_folder):
             count =+ count + 1
     
 if __name__ == '__main__':
-    #convert_pdf_to_png()
-    #convert_png_to_pdf()
-    #combine_pdf()
     pass
