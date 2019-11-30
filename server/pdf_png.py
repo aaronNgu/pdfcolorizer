@@ -17,14 +17,9 @@ def convert_pdf_to_png(path, pdf, output_folder):
         for image in images_from_path:
             image.save("{}/{}.png".format(ImagePath,count), "PNG")
             count =+ count + 1
-
-def convert_png_to_pdf():
-    pass
-
-def combine_pdf():
-    pass
     
 if __name__ == '__main__':
     #convert_pdf_to_png()
     #convert_png_to_pdf()
     #combine_pdf()
+    pass
