@@ -57,7 +57,6 @@ class App extends React.Component {
 
         </header>
         <FilePond
-          ref={ref => this.pond = ref}
           files={this.state.files}
           allowMultiple={false}
           acceptedFileTypes={['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']}
