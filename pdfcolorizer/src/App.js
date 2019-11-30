@@ -1,8 +1,15 @@
 import React from 'react';
 import axios from 'axios';
 import './App.css';
+import { FilePond, registerPlugin } from 'react-filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
+import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
+import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
+import 'filepond/dist/filepond.min.css';
+import { Document, Page } from 'react-pdf'
+import 'react-pdf/dist/Page/AnnotationLayer.css';
 
-import Uploader from './Upload';
+registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
 class App extends React.Component {
 
@@ -35,13 +42,21 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        <input type="file" name="file" onChange={this.onChangeHandler} />
-        <button type="button" onClick={this.onClickHandler}>Upload</button>
+      <div className="App">
+        <header className="App-header">
+          <h1>PDFColorizer</h1>
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Upload your file below
+        </p>
 
+        </header>
+        <FilePond acceptedFileTypes={['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']}>
+        </FilePond>
       </div>
-    );
+    )
   }
+
 }
 
 export default App;
