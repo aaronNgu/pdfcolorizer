@@ -3,19 +3,28 @@ from PIL import Image
 import tempfile
 import os
 
-def main():
-    ImagePath = '/Users/A/Desktop/Code/LHDTest/Images/'
+def convert_pdf_to_png(path, pdf, output_folder):
+    #change path to where the images should be stored 
+    ImagePath = output_folder
 
     if not os.path.exists(ImagePath):
         os.makedirs(ImagePath)
     
-    with tempfile.TemporaryDirectory() as path:
-        images_from_path = convert_from_path('/Users/A/Desktop/Code/LHDTest/lec29.pdf', output_folder=path)
+    with tempfile.TemporaryDirectory() as something:
+        images_from_path = convert_from_path('{}/{}'.format(path, pdf), output_folder=something)
+        
         count = 0
         for image in images_from_path:
-            print(len(image))
             image.save("{}/{}.png".format(ImagePath,count), "PNG")
-    
+            count =+ count + 1
+
+def convert_png_to_pdf():
+    pass
+
+def combine_pdf():
+    pass
     
 if __name__ == '__main__':
-    main()
+    #convert_pdf_to_png()
+    #convert_png_to_pdf()
+    #combine_pdf()
