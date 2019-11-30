@@ -6,7 +6,6 @@ import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 import 'filepond/dist/filepond.min.css';
-import { Document, Page } from 'react-pdf'
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview);
@@ -17,7 +16,7 @@ class App extends React.Component {
     super();
 
     this.state = {
-      selectedFile: null
+      files: null
     }
   }
 
@@ -29,9 +28,16 @@ class App extends React.Component {
     })
   }
 
+  onUpdateFiles = fileItems => {
+    this.setState({
+      files: fileItems.map(fileItem => fileItem.file)
+    })
+    console.log(this.state.files[0])
+  }
+
   onClickHandler = () => {
     const data = new FormData()
-    data.append('file', this.state.selectedFile)
+    data.append('file', this.state.files[0])
     axios.post("http://localhost:5000/upload", data, {
       // receive two    parameter endpoint url ,form data
     })
@@ -50,12 +56,20 @@ class App extends React.Component {
         </p>
 
         </header>
-        <FilePond acceptedFileTypes={['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']}>
-        </FilePond>
+        <FilePond
+          ref={ref => this.pond = ref}
+          server='http://localhost:5000/upload'
+          files={this.state.files}
+          allowMultiple={false}
+          acceptedFileTypes={['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']}
+          onupdatefiles={this.onUpdateFiles}
+        />
+
+        <button type="button" onClick={this.onClickHandler}>Upload</button> 
+
       </div>
     )
   }
-
 }
 
 export default App;
