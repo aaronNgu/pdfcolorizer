@@ -8,6 +8,8 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css
 import 'filepond/dist/filepond.min.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 
+import Button from '@material-ui/core/Button';
+
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
 class App extends React.Component {
@@ -62,9 +64,8 @@ class App extends React.Component {
           acceptedFileTypes={['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']}
           onupdatefiles={this.onUpdateFiles}
         />
-
-        <button type="button" onClick={this.onClickHandler}>Upload</button> 
-
+        <Button color='primary' variant="contained" onClickHandler={this.onClickHandler}>Process</Button> 
+  
       </div>
     )
   }
