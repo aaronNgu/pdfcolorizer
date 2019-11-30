@@ -58,7 +58,6 @@ class App extends React.Component {
         </header>
         <FilePond
           ref={ref => this.pond = ref}
-          server='http://localhost:5000/upload'
           files={this.state.files}
           allowMultiple={false}
           acceptedFileTypes={['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']}
