@@ -45,7 +45,6 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <h1>PDFColorizer</h1>
-          <img src={logo} className="App-logo" alt="logo" />
           <p>
             Upload your file below
         </p>
