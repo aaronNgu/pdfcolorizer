@@ -7,6 +7,7 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 import 'filepond/dist/filepond.min.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
+'react-pdf/build/entry.noworker'
 import { Document, Page } from 'react-pdf';
 
 import { ClipLoader } from 'react-spinners';
@@ -25,7 +26,8 @@ class App extends React.Component {
       numPages: null,
       pageNumber: 1,
       startProcessing: false,
-      finishProcessing: false
+      finishProcessing: false,
+      processedFile: null
     }
   }
 
@@ -62,7 +64,8 @@ class App extends React.Component {
   onClickHandler = () => {
     const data = new FormData()
     this.setState({
-      startProcessing: true
+      startProcessing: true,
+
     })
 
     data.append('file', this.state.files[0])
@@ -87,16 +90,6 @@ class App extends React.Component {
           <p>
             Upload your file below
             </p>
-          <div>
-            <Document
-              file="https://www.students.cs.ubc.ca/~cs-221/2019W1/lectures/slides/WE/lec16/lec16.pdf"
-              onLoadSuccess={this.onDocumentLoadSuccess}
-            >
-              <Page pageNumber={pageNumber} />
-            </Document>
-            <p>Page {pageNumber} of {numPages}</p>
-          </div>
-
         </header>
         <FilePond
           files={this.state.files}
@@ -114,7 +107,15 @@ class App extends React.Component {
               color={'#123abc'}
               loading={this.state.processing} />
             :
-            'Display processed pdf here'
+            <div>
+            <Document
+              file={this.state.files[0]}
+              onLoadSuccess={this.onDocumentLoadSuccess}
+            >
+              <Page pageNumber={pageNumber} />
+            </Document>
+            <p>Page {pageNumber} of {numPages}</p>
+          </div>
         }
       </div>
     );
