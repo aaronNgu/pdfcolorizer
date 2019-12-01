@@ -24,7 +24,7 @@ def allowed_file(filename):
 
 
 @app.route('/upload', methods=['GET','POST'])
-@cross_origin(origin='localhost',headers=['Content- Type','Authorization'])
+@cross_origin(origin='localhost',headers=['Content-Type','Authorization'])
 def upload_file():
     if request.method == 'POST':
         # check if the post request has the file part
@@ -42,6 +42,11 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             os.system('python3 pdf_png.py ' + filename)
             return 'Success'
+
+@app.route('/processed', methods=['GET'])
+@cross_origin(origin='localhost',headers=['Content-Type','Authorization'])
+def process_file():
+    return 'Success'
 
 
 if __name__ == '__main__':
