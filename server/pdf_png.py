@@ -13,11 +13,23 @@ def convert_pdf_to_png(path, pdf, output_folder):
     
     with tempfile.TemporaryDirectory() as something:
         images_from_path = convert_from_path('{}/{}'.format(path, pdf), output_folder=something)
-        
+       
         count = 0
         for image in images_from_path:
             image.save("{}/{}.png".format(ImagePath,count), "PNG")
-            count =+ count + 1
-    
+            os.system('python3 daltonize.py -d ' + './uploads/' + pdf[:-4] + '/' + str(count) +'.png ./uploads/'+ pdf[:-4] + '/' + str(count) + 'o.png')
+            count = count + 1
+
+def call_daltonize():
+    os.system('python3 daltonize.py -d ./uploads/lec29/0.png ./uploads/lec29/0o.png')
+    os.system('python3 daltonize.py -d ./uploads/lec29/1.png ./uploads/lec29/1o.png')
+
 if __name__ == '__main__':
-    pass
+    with open('testpngpdf.txt', 'a+') as f:
+        f.write("yo")
+    print(sys.argv[0])
+    print("\n")
+    print(sys.argv[1])
+    convert_pdf_to_png('./uploads', sys.argv[1], './uploads/{}'.format(sys.argv[1][:-4]))
+    os.system('convert ./uploads/'+sys.argv[1][:-4] + '/*o.png ./processed/output_' + sys.argv[1])
+
