@@ -21,8 +21,11 @@ class App extends React.Component {
 
     this.state = {
       files: null,
-      processing: false
+      startProcessing: false,
+      finishProcessing: false
     }
+
+    this.onClickHandler = this.onClickHandler.bind(this)
   }
 
   onUpdateFiles = fileItems => {
@@ -32,17 +35,34 @@ class App extends React.Component {
     console.log(this.state.files[0])
   }
 
+  getProcessedFile = () => {
+    axios.get('http://localhost:5000/processed')
+      .then((response) => {
+        this.setState({
+          finishProcessing: true
+        })
+        console.log(response);
+      })
+  }
+
+  finishProcessing = () => {
+    
+  }
+
+
   onClickHandler = () => {
     const data = new FormData()
     this.setState({
-      processing: true
+      startProcessing: true
     })
+
     data.append('file', this.state.files[0])
     axios.post("http://localhost:5000/upload", data, {
       // receive two    parameter endpoint url ,form data
     })
       .then(res => { // then print response status
         console.log(res.statusText)
+        this.getProcessedFile()
       })
       .catch(error => {
         console.log(error)
@@ -65,17 +85,19 @@ class App extends React.Component {
           acceptedFileTypes={['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']}
           onupdatefiles={this.onUpdateFiles}
         />
-        {(!this.state.processing) ?
-          <Button color='primary' variant="contained" onClick={this.onClickHandler}>Process</Button> 
+        {(!this.state.startProcessing) ?
+          <Button color='primary' variant="contained" onClick={this.onClickHandler}>Process</Button>
           :
-          <ClipLoader
-          sizeUnit={"px"}
-          size={100}
-          color={'#123abc'}
-          loading={this.state.processing}
-        />
-          }
-  
+          (!this.state.finishProcessing) ?
+            <ClipLoader
+              sizeUnit={"px"}
+              size={100}
+              color={'#123abc'}
+              loading={this.state.processing} />
+            :
+            'Display processed pdf here'
+        }
+
       </div>
     )
   }
