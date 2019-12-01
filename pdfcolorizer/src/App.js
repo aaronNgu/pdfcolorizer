@@ -12,6 +12,9 @@ import { Document, Page, pdfjs } from "react-pdf";
 import { ClipLoader } from 'react-spinners';
 
 import Button from '@material-ui/core/Button';
+import Fab from '@material-ui/core/Fab';
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
@@ -113,7 +116,14 @@ class App extends React.Component {
               >
                 <Page pageNumber={pageNumber} />
               </Document>
+              <Fab color="secondary" aria-label="backArrow" onClick={() => (this.setState({ pageNumber: pageNumber - 1 }))}>
+                <ArrowBackIosIcon />
+              </Fab>
               <p>Page {pageNumber} of {numPages}</p>
+              <Fab color="secondary" aria-label="forwardArrow" onClick={() => (this.setState({ pageNumber: pageNumber + 1 }))}>
+                <ArrowForwardIosIcon />
+              </Fab>
+
             </div>
         }
       </div>
