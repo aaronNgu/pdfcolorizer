@@ -7,14 +7,15 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 import 'filepond/dist/filepond.min.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
-'react-pdf/build/entry.noworker'
-import { Document, Page } from 'react-pdf';
+import { Document, Page, pdfjs } from "react-pdf";
 
 import { ClipLoader } from 'react-spinners';
 
 import Button from '@material-ui/core/Button';
 
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview);
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+
 
 class App extends React.Component {
 
@@ -54,6 +55,7 @@ class App extends React.Component {
   getProcessedFile = () => {
     axios.get('http://localhost:5000/processed')
       .then((response) => {
+        const procesedFile = new FormData()
         this.setState({
           finishProcessing: true
         })
