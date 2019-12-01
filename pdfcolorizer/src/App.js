@@ -70,7 +70,7 @@ class App extends React.Component {
           :
           <ClipLoader
           sizeUnit={"px"}
-          size={8-}
+          size={100}
           color={'#123abc'}
           loading={this.state.processing}
         />
