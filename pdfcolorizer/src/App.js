@@ -111,7 +111,7 @@ class App extends React.Component {
             :
             <div>
               <Document
-                file='/processed/output_lec29.pdf'
+                file={this.state.files[0].name}
                 onLoadSuccess={this.onDocumentLoadSuccess}
               >
                 <Page pageNumber={pageNumber} />
