@@ -27,8 +27,7 @@ class App extends React.Component {
       numPages: null,
       pageNumber: 1,
       startProcessing: false,
-      finishProcessing: false,
-      processedFile: null
+      finishProcessing: false
     }
   }
 
@@ -66,8 +65,7 @@ class App extends React.Component {
   onClickHandler = () => {
     const data = new FormData()
     this.setState({
-      startProcessing: true,
-
+      startProcessing: true
     })
 
     data.append('file', this.state.files[0])
@@ -110,14 +108,14 @@ class App extends React.Component {
               loading={this.state.processing} />
             :
             <div>
-            <Document
-              file={this.state.files[0]}
-              onLoadSuccess={this.onDocumentLoadSuccess}
-            >
-              <Page pageNumber={pageNumber} />
-            </Document>
-            <p>Page {pageNumber} of {numPages}</p>
-          </div>
+              <Document
+                file={this.state.files[0]}
+                onLoadSuccess={this.onDocumentLoadSuccess}
+              >
+                <Page pageNumber={pageNumber} />
+              </Document>
+              <p>Page {pageNumber} of {numPages}</p>
+            </div>
         }
       </div>
     );
