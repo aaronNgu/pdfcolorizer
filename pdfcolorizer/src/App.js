@@ -8,8 +8,6 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css
 import 'filepond/dist/filepond.min.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
 import { Document, Page } from 'react-pdf';
-import PdfPreview from "react-pdf-preview";
-
 
 import { ClipLoader } from 'react-spinners';
 
@@ -29,105 +27,98 @@ class App extends React.Component {
       startProcessing: false,
       finishProcessing: false
     }
-
-    onDocumentLoadSuccess = ({ numPages }) => {
-      this.setState({ numPages });
-      console.log(numPages);
-    }
-
-    onChangeHandler = event => {
-      console.log(event.target.files[0])
-      this.setState({
-        selectedFile: event.target.files[0],
-        loaded: 0,
-      })
-    }
-
-    onUpdateFiles = fileItems => {
-      this.setState({
-        files: fileItems.map(fileItem => fileItem.file)
-      })
-      console.log(this.state.files[0])
-    }
-
-    getProcessedFile = () => {
-      axios.get('http://localhost:5000/processed')
-        .then((response) => {
-          this.setState({
-            finishProcessing: true
-          })
-          console.log(response);
-        })
-    }
-
-    finishProcessing = () => {
-
-    }
-
-
-    onClickHandler = () => {
-      const data = new FormData()
-      this.setState({
-        startProcessing: true
-      })
-
-      data.append('file', this.state.files[0])
-      axios.post("http://localhost:5000/upload", data, {
-        // receive two    parameter endpoint url ,form data
-      })
-        .then(res => { // then print response status
-          console.log(res.statusText)
-          this.getProcessedFile()
-        })
-        .catch(error => {
-          console.log(error)
-        })
-    }
-
-    render() {
-
-      const { pageNumber, numPages } = this.state;
-      return (
-
-        <div className="App">
-          <header className="App-header">
-            <h1>PDFColorizer</h1>
-            <p>
-              Upload your file below
-        </p>
-            <div>
-              <Document
-                file="https://www.students.cs.ubc.ca/~cs-221/2019W1/lectures/slides/WE/lec16/lec16.pdf"
-                onLoadSuccess={this.onDocumentLoadSuccess}
-              >
-                <Page pageNumber={pageNumber} />
-              </Document>
-              <p>Page {pageNumber} of {numPages}</p>
-            </div>
-
-          </header>
-          <FilePond
-            files={this.state.files}
-            allowMultiple={false}
-            acceptedFileTypes={['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']}
-            onupdatefiles={this.onUpdateFiles}
-          />
-          {(!this.state.startProcessing) ?
-            <Button color='primary' variant="contained" onClick={this.onClickHandler}>Process</Button>
-            :
-            (!this.state.finishProcessing) ?
-              <ClipLoader
-                sizeUnit={"px"}
-                size={100}
-                color={'#123abc'}
-                loading={this.state.processing} />
-              :
-              'Display processed pdf here'
-          }
-
-        </div>
-      )
-    }
   }
 
-  export default App;
+  onDocumentLoadSuccess = ({ numPages }) => {
+    this.setState({ numPages });
+    console.log(numPages);
+  }
+
+  onChangeHandler = event => {
+    console.log(event.target.files[0])
+    this.setState({
+      selectedFile: event.target.files[0],
+      loaded: 0,
+    })
+  }
+
+  onUpdateFiles = fileItems => {
+    this.setState({
+      files: fileItems.map(fileItem => fileItem.file)
+    })
+    console.log(this.state.files[0])
+  }
+
+  getProcessedFile = () => {
+    axios.get('http://localhost:5000/processed')
+      .then((response) => {
+        this.setState({
+          finishProcessing: true
+        })
+        console.log(response);
+      })
+  }
+
+  onClickHandler = () => {
+    const data = new FormData()
+    this.setState({
+      startProcessing: true
+    })
+
+    data.append('file', this.state.files[0])
+    axios.post("http://localhost:5000/upload", data, {
+      // receive two    parameter endpoint url ,form data
+    })
+      .then(res => { // then print response status
+        console.log(res.statusText)
+        this.getProcessedFile()
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  render() {
+    const { pageNumber, numPages } = this.state;
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h1>PDFColorizer</h1>
+          <p>
+            Upload your file below
+            </p>
+          <div>
+            <Document
+              file="https://www.students.cs.ubc.ca/~cs-221/2019W1/lectures/slides/WE/lec16/lec16.pdf"
+              onLoadSuccess={this.onDocumentLoadSuccess}
+            >
+              <Page pageNumber={pageNumber} />
+            </Document>
+            <p>Page {pageNumber} of {numPages}</p>
+          </div>
+
+        </header>
+        <FilePond
+          files={this.state.files}
+          allowMultiple={false}
+          acceptedFileTypes={['application/pdf', 'image/png', 'image/jpg', 'image/jpeg']}
+          onupdatefiles={this.onUpdateFiles}
+        />
+        {(!this.state.startProcessing) ?
+          <Button color='primary' variant="contained" onClick={this.onClickHandler}>Process</Button>
+          :
+          (!this.state.finishProcessing) ?
+            <ClipLoader
+              sizeUnit={"px"}
+              size={100}
+              color={'#123abc'}
+              loading={this.state.processing} />
+            :
+            'Display processed pdf here'
+        }
+      </div>
+    );
+  }
+}
+
+export default App;
