@@ -88,7 +88,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <header className="App-header">
-          <h1>PDFColorizer</h1>
+          <h1>UncolouredPDF</h1>
           <p>
             Upload your file below
             </p>
@@ -111,18 +111,20 @@ class App extends React.Component {
             :
             <div>
               <Document
-                file={this.state.procesedFilePath}
+                file='/processed/output_lec29.pdf'
                 onLoadSuccess={this.onDocumentLoadSuccess}
               >
                 <Page pageNumber={pageNumber} />
               </Document>
-              <Fab color="secondary" aria-label="backArrow" onClick={() => (this.setState({ pageNumber: pageNumber - 1 }))}>
-                <ArrowBackIosIcon />
-              </Fab>
-              <p>Page {pageNumber} of {numPages}</p>
-              <Fab color="secondary" aria-label="forwardArrow" onClick={() => (this.setState({ pageNumber: pageNumber + 1 }))}>
-                <ArrowForwardIosIcon />
-              </Fab>
+              <div className='pdfNav'>
+                <Fab color="primary" aria-label="backArrow" onClick={() => (this.setState({ pageNumber: pageNumber - 1 }))} className='nav-button'>
+                  <ArrowBackIosIcon />
+                </Fab>
+                <p>Page {pageNumber} of {numPages}</p>
+                <Fab color="primary" aria-label="forwardArrow" onClick={() => (this.setState({ pageNumber: pageNumber + 1 }))} className='nav-button'>
+                  <ArrowForwardIosIcon />
+                </Fab>
+              </div>
 
             </div>
         }
