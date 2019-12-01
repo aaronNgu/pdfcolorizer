@@ -7,6 +7,9 @@ import FilePondPluginImagePreview from 'filepond-plugin-image-preview';
 import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css';
 import 'filepond/dist/filepond.min.css';
 import 'react-pdf/dist/Page/AnnotationLayer.css';
+import { Document, Page } from 'react-pdf';
+import PdfPreview from "react-pdf-preview";
+
 
 registerPlugin(FilePondPluginFileValidateType, FilePondPluginImagePreview);
 
@@ -16,8 +19,15 @@ class App extends React.Component {
     super();
 
     this.state = {
-      files: null
+      files: null,
+      numPages: null,
+      pageNumber: 1,
     }
+  }
+
+  onDocumentLoadSuccess = ({ numPages }) => {
+    this.setState({ numPages });
+    console.log(numPages);
   }
 
   onChangeHandler = event => {
@@ -47,13 +57,25 @@ class App extends React.Component {
   }
 
   render() {
+
+    const { pageNumber, numPages } = this.state;
     return (
+    
       <div className="App">
         <header className="App-header">
           <h1>PDFColorizer</h1>
           <p>
             Upload your file below
         </p>
+        <div>
+        <Document
+          file="https://www.students.cs.ubc.ca/~cs-221/2019W1/lectures/slides/WE/lec16/lec16.pdf"
+          onLoadSuccess={this.onDocumentLoadSuccess}
+        >
+          <Page pageNumber={pageNumber} />
+        </Document>
+        <p>Page {pageNumber} of {numPages}</p>
+        </div>
 
         </header>
         <FilePond
