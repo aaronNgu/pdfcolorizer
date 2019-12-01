@@ -2,6 +2,7 @@ import os
 from flask import Flask, flash, request, redirect, url_for
 from flask_cors import CORS, cross_origin
 from werkzeug.utils import secure_filename
+from pdf_png import *
 
 UPLOAD_FOLDER = './uploads'
 ALLOWED_EXTENSIONS = {'pdf', 'png'}
@@ -39,6 +40,7 @@ def upload_file():
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            os.system('python3 pdf_png.py ' + filename)
             return 'Success'
 
 @app.route('/processed', methods=['GET'])
