@@ -27,7 +27,8 @@ class App extends React.Component {
       numPages: null,
       pageNumber: 1,
       startProcessing: false,
-      finishProcessing: false
+      finishProcessing: false,
+      procesedFilePath: ''
     }
   }
 
@@ -48,7 +49,6 @@ class App extends React.Component {
     this.setState({
       files: fileItems.map(fileItem => fileItem.file)
     })
-    console.log(this.state.files[0])
   }
 
   getProcessedFile = () => {
@@ -56,9 +56,9 @@ class App extends React.Component {
       .then((response) => {
         const procesedFile = new FormData()
         this.setState({
-          finishProcessing: true
+          finishProcessing: true,
+          procesedFilePath: '/processed/' + this.state.files[0].name
         })
-        console.log(response);
       })
   }
 
@@ -73,7 +73,6 @@ class App extends React.Component {
       // receive two    parameter endpoint url ,form data
     })
       .then(res => { // then print response status
-        console.log(res.statusText)
         this.getProcessedFile()
       })
       .catch(error => {
@@ -109,7 +108,7 @@ class App extends React.Component {
             :
             <div>
               <Document
-                file={this.state.files[0]}
+                file={this.state.procesedFilePath}
                 onLoadSuccess={this.onDocumentLoadSuccess}
               >
                 <Page pageNumber={pageNumber} />

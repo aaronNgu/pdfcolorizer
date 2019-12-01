@@ -31,5 +31,5 @@ if __name__ == '__main__':
     print("\n")
     print(sys.argv[1])
     convert_pdf_to_png('./uploads', sys.argv[1], './uploads/{}'.format(sys.argv[1][:-4]))
-    os.system('convert ./uploads/'+sys.argv[1][:-4] + '/*o.png ./processed/' + sys.argv[1])
+    os.system('convert ./uploads/'+sys.argv[1][:-4] + '/*o.png ../pdfcolorizer/public/processed/' + sys.argv[1])
 
