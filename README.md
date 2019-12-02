@@ -13,6 +13,7 @@ npm start
 In another terminal
 ```
 cd server
+pip install -r requirement.txt
 python3 server.py
 ```
 
